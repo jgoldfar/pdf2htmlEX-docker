@@ -1,0 +1,41 @@
+FROM debian:stretch
+
+# Make sure we don't get notifications we can't answer during building.
+ENV DEBIAN_FRONTEND noninteractive
+
+LABEL maintainer="Jonathan Goldfarb <jgoldfar@my.fit.edu>"
+
+RUN apt-get -q -y update && \
+    apt-get upgrade -y -o Dpkg::Options::="--force-confdef" -o DPkg::Options::="--force-confold" && \
+    apt-get -q -y --no-install-recommends install \
+    # Essential build utilities
+    build-essential \
+    autoconf \
+    gcc \
+    pkg-config \
+    git \
+    cmake \
+    ca-certificates \ 
+    libfreetype6-dev \
+    # Poppler-specific packages
+    libfontconfig1-dev \
+    libjpeg-dev \
+    libnss3-dev \
+    # libuninameslist-specific packages
+    automake \
+    libtool \
+    # fontforge-specific packages
+    libltdl-dev \
+    python-dev \
+    libglib2.0-dev \
+    libxml2-dev \
+    libspiro-dev \
+    gettext \
+    # pdf2htmlEX-specific packages
+    default-jre \
+    libcairo2-dev \
+    libpango1.0-dev && \
+    # Clean up apt installation
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+

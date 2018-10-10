@@ -1,0 +1,8 @@
+FROM jgoldfar/pdf2htmlex-deps
+
+# Install pdf2htmlEX
+RUN git clone --depth 1 ${PDF2HTMLEX_SOURCE} && \
+    cd pdf2htmlEX && \
+    cmake -DCMAKE_INSTALL_PREFIX=`pwd`/../usr -L . && \
+    make && \
+    make install
