@@ -1,5 +1,6 @@
-sudo: true
-dist: stretch
+language: generic
+
+sudo: required
 
 jobs:
   include:
