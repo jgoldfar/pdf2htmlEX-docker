@@ -7,6 +7,6 @@ COPY CMakeLists.txt.patch ${WORKDIR}/
 
 COPY dobuild.sh ${WORKDIR}/
 
-RUN cd ${WORKDIR} && ./dobuild.sh
+RUN cd ${WORKDIR}/pdf2htmlEX && ${WORKDIR}/dobuild.sh && rm ${WORKDIR}/dobuild.sh
 
-VOLUME /data
+VOLUME /data/

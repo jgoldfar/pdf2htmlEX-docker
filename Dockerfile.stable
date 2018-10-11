@@ -4,13 +4,11 @@ ENV PDF2HTMLEX_SOURCE "https://github.com/jgoldfar/pdf2htmlEX.git"
 
 COPY CMakeLists.txt.patch ${WORKDIR}/
 
+COPY dobuild.sh ${WORKDIR}/
+
 # Install pdf2htmlEX
 RUN cd ${WORKDIR} && \
     git clone --depth 1 ${PDF2HTMLEX_SOURCE} && \
-    cd pdf2htmlEX && \
-    patch < ${WORKDIR}/CMakeLists.txt.patch && \
-    cmake -DENABLE_SVG=ON -DCMAKE_INSTALL_PREFIX=${WORKDIR}/usr . && \
-    make && \
-    make install
+    cd pdf2htmlEX && ${WORKDIR}/dobuild.sh && rm ${WORKDIR}/dobuild.sh
 
 VOLUME /data/
