@@ -8,6 +8,9 @@ ENV POPPLER_SOURCE "https://gitlab.freedesktop.org/poppler/poppler.git"
 ENV FONTFORGE_SOURCE "https://github.com/fontforge/fontforge.git"
 ENV LIBUNINAMESLIST_SOURCE "https://github.com/fontforge/libuninameslist.git"
 
+ENV LD_LIBRARY_PATH ${WORKDIR}/usr/lib:$LD_LIBRARY_PATH
+ENV PKG_CONFIG_PATH ${WORKDIR}/usr/lib/pkgconfig:$PKG_CONFIG_PATH
+
 LABEL maintainer="Jonathan Goldfarb <jgoldfar@my.fit.edu>"
 
 # Clone and build poppler

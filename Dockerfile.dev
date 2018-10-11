@@ -6,3 +6,7 @@ COPY pdf2htmlEX ${WORKDIR}/pdf2htmlEX
 COPY CMakeLists.txt.patch ${WORKDIR}/
 
 COPY dobuild.sh ${WORKDIR}/
+
+RUN cd ${WORKDIR} && ./dobuild.sh
+
+VOLUME /data

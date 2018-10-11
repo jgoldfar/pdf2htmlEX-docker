@@ -6,10 +6,11 @@ COPY CMakeLists.txt.patch ${WORKDIR}/
 
 # Install pdf2htmlEX
 RUN cd ${WORKDIR} && \
-    export PKG_CONFIG_PATH=${WORKDIR}/usr/lib/pkgconfig:${PKG_CONFIG_PATH} && \
     git clone --depth 1 ${PDF2HTMLEX_SOURCE} && \
     cd pdf2htmlEX && \
     patch < ${WORKDIR}/CMakeLists.txt.patch && \
     cmake -DENABLE_SVG=ON -DCMAKE_INSTALL_PREFIX=${WORKDIR}/usr . && \
     make && \
     make install
+
+VOLUME /data/
