@@ -1,4 +1,8 @@
 FROM jgoldfar/pdf2htmlex-deps
 
 # Install pdf2htmlEX
-COPY pdf2htmlEX pdf2htmlEX
+COPY pdf2htmlEX ${WORKDIR}/pdf2htmlEX
+
+COPY CMakeLists.txt.patch ${WORKDIR}/
+
+COPY dobuild.sh ${WORKDIR}/

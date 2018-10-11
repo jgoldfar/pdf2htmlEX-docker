@@ -1,38 +1,42 @@
 FROM jgoldfar/pdf2htmlex-base
 
-# Make sure we don't get notifications we can't answer during building.
+WORKDIR /build
+
+ENV WORKDIR /build
 ENV POPPLER_NAME "poppler-0.63.0"
 ENV POPPLER_SOURCE "https://gitlab.freedesktop.org/poppler/poppler.git"
 ENV FONTFORGE_SOURCE "https://github.com/fontforge/fontforge.git"
-ENV PDF2HTMLEX_SOURCE "https://github.com/jgoldfar/pdf2htmlEX.git"
 ENV LIBUNINAMESLIST_SOURCE "https://github.com/fontforge/libuninameslist.git"
 
 LABEL maintainer="Jonathan Goldfarb <jgoldfar@my.fit.edu>"
 
 # Clone and build poppler
-RUN git clone ${POPPLER_SOURCE} && \
+RUN cd ${WORKDIR} && \
+    git clone ${POPPLER_SOURCE} && \
     cd poppler && \
     git checkout tags/${POPPLER_NAME} -b poppler-local && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=`pwd`/../usr -DENABLE_XPDF_HEADERS=ON -DENABLE_LIBOPENJPEG=none . && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${WORKDIR}/usr -DENABLE_XPDF_HEADERS=ON -DENABLE_LIBOPENJPEG=none . && \
     make && \
     make install
 
 # Install libuninameslist
-RUN git clone ${LIBUNINAMESLIST_SOURCE} && \
+RUN cd ${WORKDIR} && \
+    git clone ${LIBUNINAMESLIST_SOURCE} && \
     cd libuninameslist && \
     git checkout tags/20180701 -b libuninameslist-local && \
     autoreconf -i && \
     automake && \
-    ./configure --prefix=`pwd`/../usr && \
+    ./configure --prefix=${WORKDIR}/usr && \
     make && \
     make install
 
 # Install fontforge
-RUN git clone ${FONTFORGE_SOURCE} && \
+RUN cd ${WORKDIR} && \
+    git clone ${FONTFORGE_SOURCE} && \
     cd fontforge && \
     git checkout tags/20170731 -b fontforge-local && \
     ./bootstrap && \
-    ./configure --disable-programs --prefix=`pwd`/../usr && \
+    ./configure --disable-programs --prefix=${WORKDIR}/usr && \
     make && \
     make install && \
     ldconfig
